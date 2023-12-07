@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NLog;
 using NLog.Web;
 using System.Security.Cryptography.X509Certificates;
+using ILogger = NLog.ILogger;
 
 
 namespace sidecar_lib;
