@@ -17,8 +17,8 @@ using System.Security.Cryptography.X509Certificates;
 namespace sidecar_lib;
 public class Auth
 {
-    string myIssuer;
-    string mySecret;
+    string? myIssuer;
+    string? mySecret;
     public Auth(WebApplicationBuilder builder, ILogger logger)
     {
 
