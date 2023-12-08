@@ -62,6 +62,8 @@ public class Auth
 
         builder.Services.AddSingleton<IVaultClient>(vaultClient);
 
+        logger.Info("Adding authentication. myIssuer: " + myIssuer + ", mySecret: " + mySecret);
+        
         builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
