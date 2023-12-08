@@ -18,10 +18,13 @@ using ILogger = NLog.ILogger;
 namespace sidecar_lib;
 public class Auth
 {
-    string? myIssuer;
-    string? mySecret;
-    public Auth(WebApplicationBuilder builder, ILogger logger)
+    public string? myIssuer { get; set; }
+    public string? mySecret { get; set; }
+    public WebApplicationBuilder builder { get; set; }
+    public Auth(WebApplicationBuilder _builder, ILogger logger)
     {
+
+        builder = _builder;
 
 
         logger.Info("Starting Auth");
@@ -63,7 +66,7 @@ public class Auth
         builder.Services.AddSingleton<IVaultClient>(vaultClient);
 
         logger.Info("Adding authentication. myIssuer: " + myIssuer + ", mySecret: " + mySecret);
-        
+
         builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
@@ -81,7 +84,7 @@ public class Auth
             };
         });
 
-        
+
         logger.Info("Auth done");
 
     }
