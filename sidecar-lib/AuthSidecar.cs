@@ -49,7 +49,7 @@ public class AuthSidecar
         mySecret = secrets.Item1;
         myIssuer = secrets.Item2;
 
-        
+
 
 
     }
@@ -86,7 +86,7 @@ public class AuthSidecar
     }
 
 
-    public TokenValidationParameters GetTokenValidationParameters (string mySecret, string myIssuer)
+    public TokenValidationParameters GetTokenValidationParameters()
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
