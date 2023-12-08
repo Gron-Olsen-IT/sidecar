@@ -65,7 +65,7 @@ public class Auth
 
         builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer("SidecarBearer", options =>
+        .AddJwtBearer(options =>
         {
             options.TokenValidationParameters = new TokenValidationParameters()
             {
