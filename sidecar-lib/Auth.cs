@@ -27,7 +27,7 @@ public class Auth
 
         //var EndPoint = "https://vaultservice:8201/";
         var EndPoint = Environment.GetEnvironmentVariable("VAULT_ADDR");
-        //logger.Info("Vault address: " + EndPoint);
+        logger.Info("Vault address: " + EndPoint);
         if (EndPoint == null)
         {
             throw new Exception("Environment variable VAULT_ADDR not set");
@@ -39,6 +39,8 @@ public class Auth
         };
 
 
+
+        logger.Info("Initialize settings " + EndPoint);
         IAuthMethodInfo authMethod = new TokenAuthMethodInfo("00000000-0000-0000-0000-000000000000");
         // Initialize settings. You can also set proxies, custom delegates etc. here.
         var vaultClientSettings = new VaultClientSettings(EndPoint, authMethod)
@@ -63,7 +65,7 @@ public class Auth
 
         builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
+        .AddJwtBearer("SidecarBearer" options =>
         {
             options.TokenValidationParameters = new TokenValidationParameters()
             {
