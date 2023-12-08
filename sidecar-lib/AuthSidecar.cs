@@ -49,6 +49,8 @@ public class AuthSidecar
         mySecret = secrets.Item1;
         myIssuer = secrets.Item2;
 
+        
+
 
     }
 
@@ -81,6 +83,22 @@ public class AuthSidecar
         logger.Info("mySecret: " + mySecret);
         logger.Info("myIssuer: " + myIssuer);
         return new Tuple<string, string>(mySecret, myIssuer);
+    }
+
+
+    public TokenValidationParameters GetTokenValidationParameters (string mySecret, string myIssuer)
+    {
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(mySecret)),
+            ValidateIssuer = true,
+            ValidIssuer = myIssuer,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+        return tokenValidationParameters;
     }
 
     
