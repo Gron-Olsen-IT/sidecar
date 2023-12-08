@@ -24,8 +24,7 @@ public class Auth
     {
 
 
-
-        //var EndPoint = "https://vaultservice:8201/";
+        logger.Info("Starting Auth");
         var EndPoint = Environment.GetEnvironmentVariable("VAULT_ADDR");
         logger.Info("Vault address: " + EndPoint);
         if (EndPoint == null)
@@ -79,6 +78,9 @@ public class Auth
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(mySecret))
             };
         });
+
+        
+        logger.Info("Auth done");
 
     }
 
