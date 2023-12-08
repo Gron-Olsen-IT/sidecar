@@ -72,7 +72,7 @@ public class Auth
                 ValidateIssuer = true,
                 ValidIssuer = myIssuer,
                 ValidateAudience = true,
-                ValidAudience = "http://127.0.0.1",
+                ValidAudience = "http://localhost",
 
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
