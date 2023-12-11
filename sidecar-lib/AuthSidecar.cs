@@ -16,6 +16,7 @@ using ILogger = NLog.ILogger;
 using NLog.LayoutRenderers;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using Microsoft.OpenApi.Models;
 
 
 namespace sidecar_lib;
@@ -99,6 +100,19 @@ public class AuthSidecar
             ClockSkew = TimeSpan.Zero
         };
         return tokenValidationParameters;
+    }
+
+        public static OpenApiSecurityScheme CreateSecurityScheme()
+    {
+        return new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            Description = "JWT Authorization header using the Bearer scheme.",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = "Bearer",
+            BearerFormat = "JWT"
+        };
     }
 
     
