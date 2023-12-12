@@ -1,0 +1,49 @@
+name: .NET
+
+on:
+  push:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'  # Ensure submodules are recursively initialized
+          
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Restore dependencies
+        run: |
+          dotnet restore
+          git submodule update --init --recursive  # Initialize and update submodules
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+
+  merge_to_main:
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push' && needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          ref: 'main'
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Merge develop into main
+        run: |
+          git config --global user.name 'Boes24'
+          git config --global user.email 'cboes2402@gmail.com'
+          git fetch origin
+          git merge --ff-only origin/develop
+          git push origin main
