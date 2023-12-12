@@ -16,6 +16,7 @@ using ILogger = NLog.ILogger;
 using NLog.LayoutRenderers;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using Microsoft.OpenApi.Models;
 
 
 namespace sidecar_lib;
@@ -48,10 +49,6 @@ public class AuthSidecar
         var secrets = GetSecrets(vaultClient, httpClientHandler).Result;
         mySecret = secrets.Item1;
         myIssuer = secrets.Item2;
-
-
-
-
     }
 
 
@@ -101,5 +98,6 @@ public class AuthSidecar
         return tokenValidationParameters;
     }
 
-    
+
+
 }
