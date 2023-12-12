@@ -14,6 +14,7 @@
     <PackageReference Include="Nlog" Version="5.2.7" />
     <PackageReference Include="NLog.Targets.Loki" Version="2.1.1" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="VaultSharp" Version="1.13.0.1" />
   </ItemGroup>
 

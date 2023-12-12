@@ -49,10 +49,6 @@ public class AuthSidecar
         var secrets = GetSecrets(vaultClient, httpClientHandler).Result;
         mySecret = secrets.Item1;
         myIssuer = secrets.Item2;
-
-
-
-
     }
 
 
@@ -102,18 +98,6 @@ public class AuthSidecar
         return tokenValidationParameters;
     }
 
-        public static OpenApiSecurityScheme CreateSecurityScheme()
-    {
-        return new OpenApiSecurityScheme
-        {
-            Name = "Authorization",
-            Description = "JWT Authorization header using the Bearer scheme.",
-            In = ParameterLocation.Header,
-            Type = SecuritySchemeType.ApiKey,
-            Scheme = "Bearer",
-            BearerFormat = "JWT"
-        };
-    }
 
-    
+
 }
