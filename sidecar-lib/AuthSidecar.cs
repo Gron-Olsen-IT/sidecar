@@ -1,22 +1,11 @@
 ﻿
 using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using VaultSharp;
 using VaultSharp.V1.AuthMethods.Token;
 using VaultSharp.V1.AuthMethods;
 using VaultSharp.V1.Commons;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.DependencyInjection;
-using NLog;
-using NLog.Web;
-using System.Security.Cryptography.X509Certificates;
 using ILogger = NLog.ILogger;
-using NLog.LayoutRenderers;
-using Microsoft.AspNetCore.Http;
-using System.Net;
-using Microsoft.OpenApi.Models;
 
 
 namespace sidecar_lib;
@@ -25,14 +14,21 @@ namespace sidecar_lib;
 public class AuthSidecar
 {
     public ILogger logger;
-    public readonly IVaultClient vaultClient;
+    //public readonly IVaultClient vaultClient;
+    public readonly AzureVault azureVault;
     public readonly string mySecret;
     public readonly string myIssuer;
 
     public AuthSidecar(ILogger _logger)
     {
         logger = _logger;
+        azureVault = new AzureVault();
 
+        mySecret = azureVault.GetSecret("Secret").Result;
+        myIssuer = azureVault.GetSecret("Issuer").Result;
+
+
+        /*
         //var EndPoint = "https://vaultservice:8201/";
         var endPoint = Environment.GetEnvironmentVariable("VAULT_ADDR");
         logger.Info("Vault address: " + endPoint);
@@ -49,6 +45,7 @@ public class AuthSidecar
         var secrets = GetSecrets(vaultClient, httpClientHandler).Result;
         mySecret = secrets.Item1;
         myIssuer = secrets.Item2;
+        */
     }
 
 
