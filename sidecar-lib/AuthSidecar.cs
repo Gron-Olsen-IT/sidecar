@@ -11,17 +11,20 @@ using ILogger = NLog.ILogger;
 namespace sidecar_lib;
 
 
+
 public class AuthSidecar
 {
     public ILogger logger;
     //public readonly IVaultClient vaultClient;
-    public readonly AzureVault azureVault;
-    public readonly string mySecret;
-    public readonly string myIssuer;
+    //public readonly AzureVault azureVault;
+    public readonly string mySecret = "secretSECRET12345678";
+    public readonly string myIssuer = "issuerISSUER12345678";
 
     public AuthSidecar(ILogger _logger)
     {
+        
         logger = _logger;
+        /*
         azureVault = new AzureVault();
 
         mySecret = azureVault.GetSecret("Secret").Result;
@@ -49,36 +52,39 @@ public class AuthSidecar
     }
 
 
-    public IVaultClient GetVaultClient(HttpClientHandler httpClientHandler, string endPoint)
-    {
-        // Initialize one of the several auth methods.
-        IAuthMethodInfo authMethod = new TokenAuthMethodInfo("00000000-0000-0000-0000-000000000000");
-        // Initialize settings. You can also set proxies, custom delegates etc. here.
-        var vaultClientSettings = new VaultClientSettings(endPoint, authMethod)
+
+    /*
+        public IVaultClient GetVaultClient(HttpClientHandler httpClientHandler, string endPoint)
         {
-            Namespace = "",
-            MyHttpClientProviderFunc = handler
-            => new HttpClient(httpClientHandler)
+
+            // Initialize one of the several auth methods.
+            IAuthMethodInfo authMethod = new TokenAuthMethodInfo("00000000-0000-0000-0000-000000000000");
+            // Initialize settings. You can also set proxies, custom delegates etc. here.
+            var vaultClientSettings = new VaultClientSettings(endPoint, authMethod)
             {
-                BaseAddress = new Uri(endPoint)
-            }
-        };
-        // Initialize client with settings.
-        IVaultClient vaultClient = new VaultClient(vaultClientSettings);
-        return vaultClient;
-    }
+                Namespace = "",
+                MyHttpClientProviderFunc = handler
+                => new HttpClient(httpClientHandler)
+                {
+                    BaseAddress = new Uri(endPoint)
+                }
+            };
+            // Initialize client with settings.
+            IVaultClient vaultClient = new VaultClient(vaultClientSettings);
+            return vaultClient;
+        }
 
-    public async Task<Tuple<string, string>> GetSecrets(IVaultClient vaultClient, HttpClientHandler httpClientHandler)
-    {
-        logger.Info("Reading secret at: " + vaultClient.Settings.MyHttpClientProviderFunc(httpClientHandler).BaseAddress);
-        Secret<SecretData> kv2Secret = await vaultClient.V1.Secrets.KeyValue.V2.ReadSecretAsync(path: "authentication", mountPoint: "secret");
-        string mySecret = kv2Secret.Data.Data["Secret"].ToString()!;
-        string myIssuer = kv2Secret.Data.Data["Issuer"].ToString()!;
-        logger.Info("mySecret: " + mySecret);
-        logger.Info("myIssuer: " + myIssuer);
-        return new Tuple<string, string>(mySecret, myIssuer);
-    }
-
+        public async Task<Tuple<string, string>> GetSecrets(IVaultClient vaultClient, HttpClientHandler httpClientHandler)
+        {
+            logger.Info("Reading secret at: " + vaultClient.Settings.MyHttpClientProviderFunc(httpClientHandler).BaseAddress);
+            Secret<SecretData> kv2Secret = await vaultClient.V1.Secrets.KeyValue.V2.ReadSecretAsync(path: "authentication", mountPoint: "secret");
+            string mySecret = kv2Secret.Data.Data["Secret"].ToString()!;
+            string myIssuer = kv2Secret.Data.Data["Issuer"].ToString()!;
+            logger.Info("mySecret: " + mySecret);
+            logger.Info("myIssuer: " + myIssuer);
+            return new Tuple<string, string>(mySecret, myIssuer);
+        }
+    */
 
     public TokenValidationParameters GetTokenValidationParameters()
     {
@@ -98,3 +104,4 @@ public class AuthSidecar
 
 
 }
+
